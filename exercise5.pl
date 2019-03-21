@@ -22,6 +22,6 @@ accAddone2([H|T], X, A) :- Xnew is H+1, accAddone2(T, [Xnew|X],A).
 
 addone_t2(List, A) :- accAddone2(List, [], Ar), reverse(Ar, A).
 
-% The last one is coded accidently and I did not want to delet it.
+% The last one was coded accidently and I did not want to delet it.
 revaddone([],[]).
 revaddone([H|T], [H_addOne|A]) :- H_addOne is H+1, revaddone(T, A).
