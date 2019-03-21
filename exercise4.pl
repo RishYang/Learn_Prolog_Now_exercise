@@ -1,4 +1,4 @@
-Exercise 4.1 and 4.2 are querise question, just query
+% Exercise 4.1 and 4.2 are querise question, just query
 % 4.3
 % Write a predicate second(X,List) which checks whether X is the second element of List . 
 % The fisrt and tail list don't matter so I use underline.
@@ -32,6 +32,11 @@ listtran([H|T], [X|L]) :- tran(H, X), listtran(T, L).
 twice([], []).
 twice([H|T], [H,H|L]) :- twice(T,L).
 
+% 4.7
+% Draw the search trees for the following three queries: 
+% pass for now
+
+% Below is practical session and practical session will have indepent file.
 combine1([],[],[]).
 combine1([H1|T1],[H2|T2],[H1,H2|L]) :- combine1(T1,T2,L).
 
