@@ -20,14 +20,27 @@ set([H|T], OutList) :- set_rev(T, [H], OutList).
 set_rev([], A, Ar) :- reverse(A, Ar).
 set_rev([H|T], A, OutList) :-  member1(H, A), set_rev(T, A, OutList).
 set_rev([H|T], A, OutList) :- \+ member1(H, A), set_rev(T, [H|A], OutList).
+% try to get rid of `\+`(`not/1`) but I failed
+set2([H|T], OutList) :- set_rev2(T, [H], OutList).
+set_rev2([], A, Ar) :- reverse(A, Ar).
+set_rev2([H|T], A, OutList) :-  (member1(H, A), set_rev(T, A, OutList));
+                                              set_rev(T, [H|A], OutList).
 
 % 3.
 % `flatten/2`
-%
-flatten(L, O) :- flatten_rev(L, [], O).
+% inspired by https://rosettacode.org/wiki/Flatten_a_list#Prolog
+% make basic cases after general cases to get less calls.
+flatten(L, O) :- flatten(L, [], O).
 
-is_flat_and_Single(X) :- \+ [H|T] = X.
+flatten([H|T], A, O) :- flatten(T, A, Anew), flatten(H, Anew, O).
+flatten(X, A, [X|A]) :- X \= [], X \= [_|_].
+flatten([], A, A).
+/* This block make list flate but the order of list is not preserved.
+flatten(L, O) :- flatten_rev(L, [], O). 
+
+is_flat_and_Single(X) :- \+ [_|_] = X.
 is_FandS(X) :- is_flat_and_Single(X).
+
 % with `append`
 flatten_rev([H|T], A, O) :- is_FandS(H), flatten_rev(T, [H|A], O).
 flatten_rev([H|T], A, O) :- \+ is_FandS(H), flatten_rev(H, [], O1), append(O1, A, Anew), flatten_rev(T, Anew, O).
@@ -41,3 +54,4 @@ flatten_rev2([H|T], A, O) :- \+ is_FandS(H),
                                 flatten_rev2(H, A, O1), 
                                 flatten_rev2(T, O1, O).
 flatten_rev2([], A, O) :- reverse(A, O).
+*/
