@@ -26,7 +26,9 @@ palindrome(List) :- rev(List, List).
 % remove top and tail
 % take care of the order of list
 toptail([H|T], Result) :- rev(T, [_|RevResult]), rev(RevResult, Result).
+% with `last`
 toptail2([H|T], Result) :- last1(T, Tail), append(Result, Tail, T).
+
 % 4. `last/2`
 % reversed head is unreversed list's tail
 last1(List, X) :- rev(List, [X|_]).
